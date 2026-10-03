@@ -6,7 +6,7 @@ Watch YouTube videos together in real-time with friends. Full sync across play, 
 
 The application is deployed as two Render services:
 
-- **Frontend:** [Add the live frontend URL here](https://your-frontend-service.onrender.com)
+- **Frontend:** [WatchParty live app](https://watch-party-ktbe.onrender.com)
 - **Backend:** [Add the live backend URL here](https://your-backend-service.onrender.com)
 
 > Replace the placeholder URLs above with the actual URLs from your Render dashboard
