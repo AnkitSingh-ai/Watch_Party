@@ -1,45 +1,47 @@
-# 🎬 WatchParty — YouTube Watch Party App
+# 🎬 WatchParty
 
-Watch YouTube videos together in real-time with friends. Full sync across play, pause, seek, and video changes — powered by WebSockets.
+WatchParty lets friends watch YouTube videos together in the same online room.
+Everyone stays in sync when the host plays, pauses, seeks, or changes a video.
+The app also includes live chat, participant roles, and host controls.
 
 ## 🚀 Live Deployment
 
-The application is deployed as two Render services:
+The frontend is available here:
 
-- **Frontend:** [WatchParty live app](https://watch-party-ktbe.onrender.com)
-- **Backend:** [Add the live backend URL here](https://your-backend-service.onrender.com)
+[Open WatchParty](https://watch-party-ktbe.onrender.com)
 
-> Replace the placeholder URLs above with the actual URLs from your Render dashboard
-> after both services finish deploying.
+The backend runs as a separate Render service. Add its public URL here once it
+is available.
 
 ---
 
 ## ✨ Features
 
-- 🎬 **YouTube IFrame API** — Embedded, controllable YouTube player
-- ⚡ **Real-time sync** — Play/pause/seek/change video synced to all participants instantly via Socket.IO
-- 🏠 **Room-based model** — Create rooms with unique codes; join via code or link
-- 👑 **Role-Based Access Control** — Host / Moderator / Participant with full permission enforcement
-- 💬 **Live Chat** — Real-time text chat in every room
-- 📋 **Participant list** — See all participants with role badges
-- 🔧 **Host controls** — Assign roles, remove participants, transfer host
-- 📱 **Mobile responsive** — Works on all screen sizes
-- 🌙 **Dark UI** — Glassmorphism-style dark theme
+- 🎬 Watch YouTube videos together with synchronized playback
+- ⚡ Keep play, pause, seek, and video changes synchronized in real time
+- 🏠 Create a room and invite others with a room code or link
+- 👑 Give participants host, moderator, or viewer permissions
+- 💬 Chat with everyone in the room
+- 📋 See who is currently watching
+- 🔧 Manage roles, remove participants, and transfer host controls
+- 📱 Use the app comfortably on desktop and mobile
+- 🌙 Enjoy a dark, modern interface
 
 ## 🧑‍💻 Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18 + TypeScript + Vite + TailwindCSS |
-| Backend | Node.js + Express |
-| Real-time | Socket.IO (WebSocket) |
-| Database | MongoDB + Mongoose |
-| Video | YouTube IFrame API |
-| OOP | Room, Participant, MessageHandler classes |
+| Part | Technology |
+|------|-----------|
+| Frontend | React, TypeScript, Vite, and Tailwind CSS |
+| Backend | Node.js and Express |
+| Real-time features | Socket.IO |
+| Database | MongoDB with Mongoose |
+| Video player | YouTube IFrame API |
 
 ---
 
-## 🏗️ Project Structure
+## 📁 Project Structure
+
+The project is split into a frontend and a backend:
 
 ```
 web3task/
@@ -77,23 +79,24 @@ web3task/
 
 ---
 
-## ⚙️ Setup and Run Instructions
+## ⚙️ Run WatchParty locally
 
-Follow these steps to run WatchParty locally.
+Follow the steps below to run the application on your computer.
 
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-- MongoDB Atlas account (optional — app runs without DB)
+### What you need
 
-### 1. Clone the repository
+- Node.js 18 or newer
+- npm
+- A MongoDB Atlas account (optional; the app can run in memory without it)
+
+### 1. Download the project
 
 ```bash
 git clone https://github.com/AnkitSingh-ai/Watch_Party.git
 cd Watch_Party
 ```
 
-### 2. Install dependencies
+### 2. Install the packages
 
 ```bash
 # Install server dependencies
@@ -105,9 +108,9 @@ cd ../client
 npm install
 ```
 
-### 3. Configure environment variables
+### 3. Add your local settings
 
-**Server** — create `server/.env`:
+Create a file named `server/.env`:
 ```env
 PORT=3001
 MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/watchparty
@@ -115,50 +118,46 @@ CLIENT_URL=http://localhost:5173
 NODE_ENV=development
 ```
 
-**Client** — create `client/.env`:
+Create a file named `client/.env`:
 ```env
 VITE_SERVER_URL=http://localhost:3001
 ```
 
-### 4. Run the application
+### 4. Start the app
 
-Open two terminals:
+Open two terminal windows. Run the backend in the first one:
 
 ```bash
 # Terminal 1 - Backend
 cd server
 npm run dev
 
-# Terminal 2 - Frontend
+# In the second terminal, start the frontend
 cd client
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-The backend runs on `http://localhost:3001` and the frontend runs on
-`http://localhost:5173`.
+Then open [http://localhost:5173](http://localhost:5173) in your browser.
+The backend listens on port `3001`.
 
 ---
 
-## 🌐 Deploying on Render
+## 🌐 Deploy on Render
 
-This project is set up to deploy as **two services** on Render:
+WatchParty uses two Render services:
 
 - **Backend**: Node.js Web Service
 - **Frontend**: Static Site
 
-### 1) Backend setup
+### Backend service
 
-Create a new **Web Service** in Render and connect this GitHub repository.
-
-Use these settings:
+Create a Render **Web Service** from this repository and use:
 
 - **Root Directory:** `server`
 - **Build Command:** `npm install --include=dev && npm run build`
 - **Start Command:** `node dist/index.js`
 
-Add these environment variables:
+Add these environment variables in Render. Keep `MONGODB_URI` private:
 
 ```env
 NODE_ENV=production
@@ -167,11 +166,9 @@ MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/watchparty?ret
 CLIENT_URL=https://<your-frontend-service>.onrender.com
 ```
 
-### 2) Frontend setup
+### Frontend service
 
-Create a new **Static Site** in Render and connect the same repository.
-
-Use these settings:
+Create a Render **Static Site** from the same repository and use:
 
 - **Root Directory:** `client`
 - **Build Command:** `npm install && npm run build`
@@ -183,26 +180,27 @@ Add this environment variable:
 VITE_SERVER_URL=https://<your-backend-service>.onrender.com
 ```
 
-### 3) MongoDB Atlas checklist
+### MongoDB setup
 
-Before the backend can connect to your database:
+Before the backend can connect to MongoDB:
 
 1. Create a MongoDB Atlas cluster
 2. Create a database user
 3. Copy the connection string into `MONGODB_URI`
 4. Allow network access for Render
 
-If needed, add this IP address in MongoDB Atlas:
+For a quick deployment, allow Render to connect by adding this IP range in
+MongoDB Atlas:
 
 ```text
 0.0.0.0/0
 ```
 
-### 4) After deployment
+### After deployment
 
-- Open the frontend Render URL
-- Make sure the frontend is using the deployed backend URL
-- Confirm rooms, chat, and playback sync work correctly
+- Open the frontend URL
+- Create a room and join it from another browser window
+- Test chat, playback controls, and participant permissions
 
 ---
 
