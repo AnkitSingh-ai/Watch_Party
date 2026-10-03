@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: watch-party-server
+    runtime: node
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: node dist/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CLIENT_URL
+        fromService:
+          type: web
+          name: watch-party-client
+          property: host
+      - key: MONGODB_URI
+        sync: false
