@@ -2,9 +2,15 @@
 
 Watch YouTube videos together in real-time with friends. Full sync across play, pause, seek, and video changes — powered by WebSockets.
 
-## 🚀 Live Demo
+## 🚀 Live Deployment
 
-> **Deploy URL:** *(Add your Render/Vercel URL here after deployment)*
+The application is deployed as two Render services:
+
+- **Frontend:** [Add the live frontend URL here](https://your-frontend-service.onrender.com)
+- **Backend:** [Add the live backend URL here](https://your-backend-service.onrender.com)
+
+> Replace the placeholder URLs above with the actual URLs from your Render dashboard
+> after both services finish deploying.
 
 ---
 
@@ -71,20 +77,25 @@ web3task/
 
 ---
 
-## ⚙️ Local Setup
+## ⚙️ Setup and Run Instructions
+
+Follow these steps to run WatchParty locally.
 
 ### Prerequisites
 - Node.js 18+
 - npm or yarn
 - MongoDB Atlas account (optional — app runs without DB)
 
-### 1. Clone & Install
+### 1. Clone the repository
 
 ```bash
-# Clone
-git clone <your-repo-url>
-cd web3task
+git clone https://github.com/AnkitSingh-ai/Watch_Party.git
+cd Watch_Party
+```
 
+### 2. Install dependencies
+
+```bash
 # Install server dependencies
 cd server
 npm install
@@ -94,7 +105,7 @@ cd ../client
 npm install
 ```
 
-### 2. Environment Variables
+### 3. Configure environment variables
 
 **Server** — create `server/.env`:
 ```env
@@ -109,7 +120,7 @@ NODE_ENV=development
 VITE_SERVER_URL=http://localhost:3001
 ```
 
-### 3. Run Dev Servers
+### 4. Run the application
 
 Open two terminals:
 
@@ -123,27 +134,75 @@ cd client
 npm run dev
 ```
 
-Open http://localhost:5173 in your browser.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+The backend runs on `http://localhost:3001` and the frontend runs on
+`http://localhost:5173`.
 
 ---
 
-## 🌐 Deployment
+## 🌐 Deploying on Render
 
-### Render (Recommended for Backend)
+This project is set up to deploy as **two services** on Render:
 
-1. Push to GitHub
-2. Create a new **Web Service** on Render
-3. Set **Root Directory** to `server`
-4. Build command: `npm install && npm run build`
-5. Start command: `node dist/index.js`
-6. Add env vars: `MONGODB_URI`, `CLIENT_URL`, `NODE_ENV=production`
+- **Backend**: Node.js Web Service
+- **Frontend**: Static Site
 
-### Vercel (Frontend)
+### 1) Backend setup
 
-1. Import repo on Vercel
-2. Set **Root Directory** to `client`
-3. Add env var: `VITE_SERVER_URL=https://your-render-backend.onrender.com`
-4. Deploy
+Create a new **Web Service** in Render and connect this GitHub repository.
+
+Use these settings:
+
+- **Root Directory:** `server`
+- **Build Command:** `npm install --include=dev && npm run build`
+- **Start Command:** `node dist/index.js`
+
+Add these environment variables:
+
+```env
+NODE_ENV=production
+PORT=10000
+MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/watchparty?retryWrites=true&w=majority
+CLIENT_URL=https://<your-frontend-service>.onrender.com
+```
+
+### 2) Frontend setup
+
+Create a new **Static Site** in Render and connect the same repository.
+
+Use these settings:
+
+- **Root Directory:** `client`
+- **Build Command:** `npm install && npm run build`
+- **Publish Directory:** `dist`
+
+Add this environment variable:
+
+```env
+VITE_SERVER_URL=https://<your-backend-service>.onrender.com
+```
+
+### 3) MongoDB Atlas checklist
+
+Before the backend can connect to your database:
+
+1. Create a MongoDB Atlas cluster
+2. Create a database user
+3. Copy the connection string into `MONGODB_URI`
+4. Allow network access for Render
+
+If needed, add this IP address in MongoDB Atlas:
+
+```text
+0.0.0.0/0
+```
+
+### 4) After deployment
+
+- Open the frontend Render URL
+- Make sure the frontend is using the deployed backend URL
+- Confirm rooms, chat, and playback sync work correctly
 
 ---
 
